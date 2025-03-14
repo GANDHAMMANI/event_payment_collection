@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Tornado - Siddhartha College DSAI Department</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #040425;
+            color: #f1f1f1;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 50%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Improved header */
+        .page-header {
+            background: linear-gradient(180deg, #000120 0%, #0a0a3a 100%);
+            padding: 15px 0;
+            border-bottom: 3px solid #ff00ff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
+            z-index: 1;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .left-header, .right-header {
+            flex: 0 0 auto;
+        }
+        
+        .center-header {
+            flex: 1;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .college-logo {
+            height: 80px;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+        
+        .college-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        .college-address {
+            font-size: 14px;
+            color: #ccccff;
+            margin-bottom: 5px;
+        }
+        
+        .college-accreditation {
+            font-size: 14px;
+            color: #ccccff;
+            font-style: italic;
+        }
+        
+        .department-name {
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            font-size: 20px;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .event-banner {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+        }
+        
+        .event-title {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin: 40px 0 10px;
+            color: #fff;
+            text-shadow: 
+                0 0 10px rgba(255, 0, 255, 0.7),
+                0 0 20px rgba(0, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .event-tagline {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #ccccff;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .date-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+            background: linear-gradient(135deg, rgba(10, 10, 40, 0.8), rgba(40, 0, 60, 0.8));
+            padding: 15px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .calendar-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            color: #ff00ff;
+        }
+        
+        .event-date {
+            font-size: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .event-quote {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            margin: 40px auto;
+            color: #e0e0ff;
+            max-width: 900px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(10, 10, 50, 0.4), rgba(40, 0, 60, 0.4));
+            border-radius: 10px;
+            border-left: 3px solid #ff00ff;
+            border-right: 3px solid #00ffff;
+            position: relative;
+        }
+        
+        .event-quote::before, .event-quote::after {
+            content: '"';
+            font-size: 60px;
+            font-family: serif;
+            position: absolute;
+            color: rgba(255, 0, 255, 0.2);
+        }
+        
+        .event-quote::before {
+            top: 0;
+            left: 10px;
+        }
+        
+        .event-quote::after {
+            bottom: -20px;
+            right: 10px;
+        }
+        
+        .event-info {
+            background: rgba(5, 5, 40, 0.6);
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .event-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 48%, rgba(255, 0, 255, 0.1) 50%, transparent 52%) 0 0 / 20px 20px,
+                linear-gradient(-45deg, transparent 48%, rgba(0, 255, 255, 0.1) 50%, transparent 52%) 0 0 / 20px 20px;
+            z-index: -1;
+        }
+        
+        .event-card {
+            background: linear-gradient(135deg, rgba(25, 33, 80, 0.8), rgba(10, 15, 30, 0.8));
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 3px solid #ff00ff;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 0, 255, 0.3);
+        }
+        
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ff00ff;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        .cyberpunk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: rgba(5, 5, 40, 0.6);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, transparent);
+            z-index: -1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
+        }
+        
+        .feature-card:hover .feature-icon {
+            color: #ff00ff;
+            transform: scale(1.1);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #00ffff;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .contribution-section {
+            background: linear-gradient(135deg, rgba(15, 15, 50, 0.8), rgba(40, 0, 60, 0.8));
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 50px;
+            text-align: center;
+            position: relative;
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            overflow: hidden;
+        }
+        
+        .neon-border {
+            position: relative;
+        }
+        
+        .neon-border::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 17px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            z-index: -1;
+            animation: neonGlow 3s linear infinite;
+            opacity: 0.7;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff00ff, #00c3ff);
+            color: white;
+            padding: 15px 40px;
+            margin-top: 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: skewX(-25deg);
+            transition: all 0.5s;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 0, 255, 0.6);
+            background: linear-gradient(45deg, #00c3ff, #ff00ff);
+        }
+        
+        .btn:hover::before {
+            width: 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            100% {
+                transform: skewX(-25deg) translateX(100%);
+            }
+        }
+        
+        .fixed-contribution {
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .contribution-card {
+            background: rgba(5, 5, 40, 0.6);
+            border: 1px solid rgba(255, 0, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px 20px;
+            min-width: 150px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .contribution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 0, 255, 0.3);
+            border-color: #ff00ff;
+        }
+        
+        .amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+        
+        .description {
+            font-size: 0.9rem;
+            color: #ccccff;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            color: #a0a0a0;
+            background: linear-gradient(180deg, transparent, rgba(5, 5, 40, 0.6));
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.5), transparent);
+        }
+        
+        .organizer {
+            font-weight: 600;
+            color: #ccccff;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        @keyframes neonGlow {
+            0% { filter: blur(5px); opacity: 0.6; }
+            50% { filter: blur(7px); opacity: 0.8; }
+            100% { filter: blur(5px); opacity: 0.6; }
+        }
+        
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(90deg, transparent 99%, #00ffff 100%),
+                linear-gradient(0deg, transparent 99%, #ff00ff 100%);
+            background-size: 40px 40px;
+            background-position: center center;
+        }
+        
+        /* Floating glows */
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        .glow-1 {
+            top: 20%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: #ff00ff;
+        }
+        
+        .glow-2 {
+            bottom: 30%;
+            right: 5%;
+            width: 250px;
+            height: 250px;
+            background: #00ffff;
+        }
+        
+        .glow-3 {
+            top: 60%;
+            left: 20%;
+            width: 200px;
+            height: 200px;
+            background: #ff00aa;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .college-name {
+                font-size: 20px;
+            }
+            
+            .event-title {
+                font-size: 2.8rem;
+            }
+            
+            .event-tagline {
+                font-size: 1.3rem;
+            }
+            
+            .event-info {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            
+            .left-header, .right-header {
+                margin-bottom: 15px;
+            }
+            
+            .college-logo {
+                height: 60px;
+            }
+            
+            .college-name {
+                font-size: 18px;
+            }
+            
+            .department-name {
+                font-size: 16px;
+            }
+            
+            .event-title {
+                font-size: 2.2rem;
+            }
+            
+            .event-tagline {
+                font-size: 1.1rem;
+            }
+            
+            .event-date {
+                font-size: 1.8rem;
+            }
+            
+            .event-quote {
+                font-size: 1rem;
+                padding: 20px;
+            }
+            
+            .contribution-card {
+                min-width: 120px;
+            }
+            
+            .amount {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="circuit-lines"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+    
+    <div class="page-header">
+        <div class="header-container">
+            <div class="left-header">
+                <img src="PBSC-50_.png" alt="50th Anniversary Logo" class="college-logo" />
+            </div>
+            <div class="center-header">
+                <div class="college-name">PARVATHANENI BRAHMAYYA<br>SIDDHARTHA COLLEGE OF ARTS & SCIENCE</div>
+                <div class="college-address">Siddhartha Nagar, Vijayawada, Andhra Pradesh 520010</div>
+                <div class="college-accreditation">Autonomous - Re-accredited at 'A+' by the NAAC - ISO Certified</div>
+                <div class="department-name">Department of Data Science & Artificial Intelligence</div>
+            </div>
+            <div class="right-header">
+                <img src="PBSClogo.png" alt="College Logo" class="college-logo" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <img src="NeuralTornado - Title Poster.png" alt="Neural Tornado Event Banner" class="event-banner" />
+        
+        <h1 class="event-title">NEURAL TORNADO</h1>
+        <p class="event-tagline">Innovation Commands the Storm, Voyagers Lead the Way</p>
+        
+        <div class="date-display">
+            <div class="calendar-icon">📅</div>
+            <div class="event-date">10th APRIL, 2025</div>
+        </div>
+        
+        <div class="event-quote">
+            Let's celebrate our innovation, dedication, and hard work with a month of grand festivities. Neural Tornado is the unstoppable force of ideas, learning, and transformation—driven by the minds of our Voyagers. Every journey is a milestone—let's cherish the moments, create endless memories, and make this celebration one to remember.
+        </div>
+        
+        <div class="event-info">
+            <div class="event-card">
+                <h2>About Neural Tornado</h2>
+                <p>This is not just an event; it's a tradition. A time to honor our senior Voyagers with a grand farewell and to inspire the next generation to embark on their journey with passion and purpose.</p>
+                <p>Organized by ISA - InnodayVoyagers Student Association, this celebration brings together students, faculty, and industry professionals for a day of innovation and inspiration.</p>
+            </div>
+            
+            <div class="cyberpunk-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Innovation Showcase</h3>
+                    <p>Display your AI and Data Science projects to industry experts and peers</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Technical Workshops</h3>
+                    <p>Learn cutting-edge technologies from industry professionals</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Competitions</h3>
+                    <p>Participate in coding challenges and hackathons with exciting prizes</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Senior Farewell</h3>
+                    <p>A special ceremony to honor graduating Voyagers</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contribution-section neon-border">
+            <h2>Support Neural Tornado</h2>
+            <p>We’re collecting contributions from students to make this event a grand success. Your support will help us create unforgettable experiences with better workshops, exciting prizes, and fun celebrations for our senior Voyagers. Every contribution counts and brings us closer to our goal!</p>
+            
+            <div class="fixed-contribution">
+                <div class="contribution-card">
+                    <div class="amount">₹300</div>
+                    <div class="description">Essential Support</div>
+                </div>
+            </div>
+            
+            <p>By contributing, you’re not just donating—you’re playing an active part in the success of this event. Every rupee you contribute will go toward making this a memorable event for everyone involved. Plus, as a token of appreciation, lunch coupons will be provided to all contributors to enjoy during the event.</p>
+            
+            <a href="https://rzp.io/rzp/7r6vYnm" target="_blank" class="btn">Contribute Now</a>
+        </div>
+        
+    
+    <footer>
+        <p>© 2025 Department of Data Science & Artificial Intelligence | Siddhartha College</p>
+        <p class="organizer">Organized by ISA - InnodayVoyagers Student Association</p>
+    </footer>
+    
+    <script>
+        // Add hover animation for feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+                this.style.boxShadow = '0 15px 30px rgba(0, 255, 255, 0.2)';
+                this.querySelector('.feature-icon').style.color = '#ff00ff';
+                this.querySelector('.feature-icon').style.transform = 'scale(1.1)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+                this.querySelector('.feature-icon').style.color = '#00ffff';
+                this.querySelector('.feature-icon').style.transform = 'scale(1)';
+            });
+        });
+        
+        // Parallax effect for glows
+        window.addEventListener('mousemove', function(e) {
+            const moveX = (e.clientX / window.innerWidth - 0.5) * 20;
+            const moveY = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            document.querySelector('.glow-1').style.transform = `translate(${moveX}px, ${moveY}px)`;
+            document.querySelector('.glow-2').style.transform = `translate(${-moveX}px, ${-moveY}px)`;
+            document.querySelector('.glow-3').style.transform = `translate(${moveY}px, ${moveX}px)`;
+        });
+    </script>
+</body>
+</html>
